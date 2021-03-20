@@ -1,0 +1,28 @@
+.pin {
+    position: absolute;
+    border-radius: 50%;
+    border: 8px solid #fff;
+    width: 8px;
+    height: 8px;
+    left: -8px;
+    top: -8px;
+    font-size: 24px;
+}
+
+.pin-effect {
+    animation: pulsate 400ms ease-out infinite;
+}
+
+@keyframes pulsate {
+    0% {
+        transform: scale(0.2);
+        opacity: 0;
+    }
+    50% {
+        opacity: 1;
+    }
+    100% {
+        transform: scale(2.5);
+        opacity: 0;
+    }
+}
