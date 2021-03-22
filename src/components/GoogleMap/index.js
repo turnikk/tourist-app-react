@@ -1,59 +1,53 @@
 import React, { useEffect, useState } from 'react';
 import GoogleMapReact from 'google-map-react';
+import { connect } from 'react-redux';
 import { config } from '../../config';
 import Marker from './Marker';
+import {
+    selectPlaces,
+    selectLocation
+} from '../../store/selectors';
+import Spinner from '../Spinner';
 
 const { GOOGLE_API_KEY } = config.api;
 
-const GoogleMap = ({
-    center = {
-        lat: 49.95,
-        lng: 30.33
-    },
-    zoom = 15
-}) => {
-    const [location, setLocation] = useState();
+const renderMarkers = (places) =>
+    places.map((place) => {
+        const { lat, lng } = place && place.geometry && place.geometry.location;
+        const { place_id, icon } = place;
+        return <Marker lat={lat} lng={lng} icon={icon} key={place_id} />;
+    });
 
-    const locSuccess = (position) => {
-        const { latitude: lat, longitude: lng } = position.coords;
-        console.log(`lat ${lat} long ${lng}`);
-        setLocation({
-            lat,
-            lng
-        });
-    };
+const GoogleMap = ({ zoom = 15, location, places }) => {
+    const { lat, lng, error: err, isLoading } = location;
 
-    const locErr = (err) => {
-        setLocation(center);
-        console.log(`GEOLOCATION ERROR: ${err.message}`);
-    };
+    const [markers, setMarkers] = useState([]);
 
     useEffect(() => {
-        navigator.geolocation.getCurrentPosition(locSuccess, locErr, {
-            enableHighAccuracy: false,
-            timeout: 10000,
-            maximumAge: Infinity
-        });
-    }, []);
+        setMarkers(renderMarkers(places));
+    }, [places]);
 
     return (
-        // Important! Always set the container height explicitly
-        <div style={{ height: '80vh', width: '80%' }}>
-            {location && (
+        <div style={{ height: '60vh', width: '90%' }}>
+            {isLoading && <Spinner/>}
+            {!isLoading && !err && (
                 <GoogleMapReact
                     bootstrapURLKeys={{ key: GOOGLE_API_KEY, language: 'en' }}
                     defaultCenter={location}
                     defaultZoom={zoom}
                 >
-                    <Marker
-                        lat={location.lat}
-                        lng={location.lng}
-                        pulse={true}
-                    />
+                    <Marker lat={lat} lng={lng} pulse={true} />
+                    {markers}
                 </GoogleMapReact>
             )}
+            {err && 'Please allow this website to use your location'}
         </div>
     );
 };
 
-export default GoogleMap;
+const mapStateToProps = (state) => ({
+    location: selectLocation(state),
+    places: selectPlaces(state)
+});
+
+export default connect(mapStateToProps)(GoogleMap);

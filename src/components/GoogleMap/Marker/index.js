@@ -1,12 +1,16 @@
 import React from 'react';
 import './index.css';
 
-const Marker = ({ styles, pulse = false }) => {
+const Marker = ({ styles, pulse = false, icon }) => {
     {
         return (
             <>
-                <div className="pin" style={styles}></div>
-                {pulse && <div className="pin pin-effect"></div>}
+                {icon ? (
+                    <img className="marker-img" src={icon} alt="Marker Icon" />
+                ) : (
+                    <div className="pin" style={styles} />
+                )}
+                {pulse && <div className="pin pin-effect" />}
             </>
         );
     }

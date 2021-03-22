@@ -9,6 +9,11 @@
     font-size: 24px;
 }
 
+.marker-img {
+    width: 18px;
+    height: 18px;
+}
+
 .pin-effect {
     animation: pulsate 400ms ease-out infinite;
 }

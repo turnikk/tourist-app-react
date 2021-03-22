@@ -1,0 +1,19 @@
+.search-button {
+    margin-bottom: 20px;
+    font-size: calc(2vmin);
+    margin-top: 20px;
+    border-radius: 20px;
+    border: none;
+    padding: 5px 20px;
+    color: white;
+    background: #4caf50;
+    opacity: 0.9;
+}
+
+button:active {
+    transform: translateY(4px);
+}
+
+.button-wrapper {
+    height: calc(9vmin);
+}
