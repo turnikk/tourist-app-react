@@ -21,7 +21,7 @@ const TopBar = ({ placesFetch, locationFetch, location, isPlacesLoading }) => {
 
     useEffect(() => {
         locationFetch();
-    }, []);
+    }, [locationFetch]);
 
     const onChangeCatName = (catName) => {
         setCategoryName(catName);
@@ -46,11 +46,11 @@ const TopBar = ({ placesFetch, locationFetch, location, isPlacesLoading }) => {
 
     return (
         <React.Fragment>
-            I want to find
+            <span>I want to find</span>
             <DropDownList onChangeCategory={onChangeCatName} />
-            name or a keyword
+            <span>name or a keyword</span>
             <SearchBox onChangeSearch={onChangeSearchText} />
-            within a {radius} km range
+            <span>within a {radius} km range</span>
             <RangeSlider val={radius} onChangeRadius={onChangeRadius} />
             <div className="button-wrapper">
                 {isPlacesLoading ? (

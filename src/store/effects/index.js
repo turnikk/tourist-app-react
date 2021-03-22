@@ -78,7 +78,7 @@ function* fetchMorePlaces(action) {
     const { pagetoken } = action.payload;
 
     try {
-        yield delay(1000); // Google API feature: https://developers.google.com/maps/documentation/places/web-service/search#PlaceSearchRequests
+        yield delay(2000); // Google API limitation: https://developers.google.com/maps/documentation/places/web-service/search#PlaceSearchRequests
 
         const { data } = yield call(searchPlacesApi, {
             pagetoken
@@ -86,10 +86,16 @@ function* fetchMorePlaces(action) {
 
         const { results, next_page_token: newPagetoken } = data;
 
-        yield put({ type: GET_MORE_PLACES_SUCCESS, payload: { places: results } });
+        yield put({
+            type: GET_MORE_PLACES_SUCCESS,
+            payload: { places: results }
+        });
 
         if (newPagetoken) {
-            yield put({ type: GET_MORE_PLACES_FETCH, payload: { pagetoken: newPagetoken } });
+            yield put({
+                type: GET_MORE_PLACES_FETCH,
+                payload: { pagetoken: newPagetoken }
+            });
         }
     } catch (err) {
         yield put({ type: GET_MORE_PLACES_FAIL, payload: err.message });
@@ -101,5 +107,9 @@ function* watchFetchMorePlaces() {
 }
 
 export default function* rootSaga() {
-    yield all([watchfetchPlaces(), watchFetchLocation(), watchFetchMorePlaces()]);
+    yield all([
+        watchfetchPlaces(),
+        watchFetchLocation(),
+        watchFetchMorePlaces()
+    ]);
 }

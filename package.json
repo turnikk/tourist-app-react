@@ -15,9 +15,11 @@
     "react-scripts": "4.0.3",
     "redux": "^4.0.5",
     "redux-actions": "^2.6.5",
+    "redux-localstorage-simple": "^2.4.0",
     "redux-saga": "^1.1.3",
     "web-vitals": "^1.0.1"
   },
+  "proxy": "https://maps.googleapis.com",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",

@@ -1,14 +1,17 @@
-import { Action } from 'redux-actions';
-
 import {
     GET_PLACES_FETCH,
     GET_PLACES_SUCCESS,
     GET_PLACES_FAIL,
-    GET_MORE_PLACES_FETCH, GET_MORE_PLACES_SUCCESS, GET_MORE_PLACES_FAIL
+    GET_MORE_PLACES_FETCH,
+    GET_MORE_PLACES_SUCCESS,
+    GET_MORE_PLACES_FAIL,
+    SAVE_TO_FAVORITES,
+    REMOVE_FROM_FAVORITES
 } from '../actions';
 
 const INITIAL_STATE = {
     collection: [],
+    favorites: {},
     error: false,
     isLoading: false
 };
@@ -52,6 +55,23 @@ const placesReducer = (state = INITIAL_STATE, action) => {
                 ...state,
                 error: true,
                 isLoading: false
+            };
+        case SAVE_TO_FAVORITES:
+            const { favorites: prevFavorites } = state;
+            const { newFavorite } = action.payload;
+            return {
+                ...state,
+                favorites: Object.assign({}, prevFavorites, {
+                    [newFavorite.place_id]: newFavorite
+                })
+            };
+        case REMOVE_FROM_FAVORITES:
+            const { favorites: stateFavorites } = state;
+            const { deletedId } = action.payload;
+            const { [deletedId]: deletedFav, ...newState } = stateFavorites;
+            return {
+                ...state,
+                favorites: newState
             };
         default:
             return state;

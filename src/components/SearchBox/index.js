@@ -1,9 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './index.css';
 
 const SearchBox = ({ onChangeSearch }) => {
-    const [text, setText] = useState('');
-
     const handleChange = (ev) => {
         const { currentTarget } = ev;
         onChangeSearch(currentTarget.value);

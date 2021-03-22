@@ -1,5 +1,3 @@
-import { Action } from 'redux-actions';
-
 import { GET_LOCATION_SUCCESS, GET_LOCATION_FAIL } from '../actions';
 
 const INITIAL_STATE = {
