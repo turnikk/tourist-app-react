@@ -19,7 +19,6 @@
     "redux-saga": "^1.1.3",
     "web-vitals": "^1.0.1"
   },
-  "proxy": "https://maps.googleapis.com",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",

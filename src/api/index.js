@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { config } from '../config';
 
-const { GOOGLE_API_KEY, GOOGLE_API_BASE_URL } = config.api;
+const { GOOGLE_API_KEY, GOOGLE_API_BASE_URL, PROXY_URL } = config.api;
 
 const SEARCH_API_ADDR = 'maps/api/place/nearbysearch/json';
 const PHOTO_API_ADDR = 'maps/api/place/photo';
@@ -14,7 +14,7 @@ export const searchPlacesApi = ({
     language,
     pagetoken
 }) =>
-    axios.get(`${GOOGLE_API_BASE_URL}${SEARCH_API_ADDR}`, {
+    axios.get(`${PROXY_URL || ''}${GOOGLE_API_BASE_URL}${SEARCH_API_ADDR}`, {
         params: {
             key: GOOGLE_API_KEY,
             keyword,
